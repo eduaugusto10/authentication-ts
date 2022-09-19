@@ -4,7 +4,7 @@ import { userRepository } from "../repositories/userRepository";
 import bcrypt from 'bcrypt'
 
 export class UserController {
-    async create(req: Request, res: Response) {
+    async store(req: Request, res: Response) {
         const { name, email, password } = req.body
 
         const userExists = await userRepository.findOneBy({ email })

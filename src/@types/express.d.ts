@@ -1,9 +1,9 @@
-import { User } from "../entities/User";
+import { UserEntity } from "../entities/UserEntity";
 
 declare global {
     namespace Express {
         export interface Request {
-            user: Partial<User>
+            user: Partial<UserEntity>
         }
     }
 }
