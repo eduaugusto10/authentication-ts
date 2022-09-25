@@ -20,7 +20,7 @@ export class SessionController {
         }
 
         const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET ?? '', {
-            expiresIn: '4h'
+            expiresIn: '8h'
         })
 
         const { password: _, ...userLogin } = user

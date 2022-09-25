@@ -5,7 +5,7 @@ import bcrypt from 'bcrypt'
 
 export class UserController {
     async store(req: Request, res: Response) {
-        const { name, email, password } = req.body
+        const { name, email, password, account } = req.body
 
         const userExists = await userRepository.findOneBy({ email })
 
@@ -18,7 +18,8 @@ export class UserController {
         const newUser = userRepository.create({
             name,
             email,
-            password: hashPass
+            password: hashPass,
+            account
         })
 
         await userRepository.save(newUser)
@@ -41,6 +42,28 @@ export class UserController {
         const { password: _, ...userLogged } = user
 
         return res.json(userLogged)
+    }
+    async deleteUser(req: Request, res: Response) {
+
+        const user = await userRepository.findOneBy({ id: Number(req.params.id) })
+
+        if (!user) {
+            throw new BadRequestError('Usuário não encontrado')
+        }
+        await userRepository.remove(user)
+
+        return res.send()
+
+    }
+
+    async updateUser(req: Request, res: Response) {
+
+        const { id } = req.params
+        const { name, email, account } = req.body
+
+        await userRepository.update(parseInt(id), { name, email, account })
+
+        return res.send()
     }
 
     async getAllUsers(req: Request, res: Response) {

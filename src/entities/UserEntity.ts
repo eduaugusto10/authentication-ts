@@ -16,6 +16,9 @@ export class UserEntity {
     @Column({ type: 'text' })
     password: string
 
+    @Column({ type: 'integer' })
+    account: number
+
     @OneToMany(() => OperationEntity, (operation) => operation.user)
     operation: OperationEntity[]
 }
